@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!-- MySQL dataSource -->
+	<!-- cafe24 관련 설정 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property> 
+		<property name="url" value="jdbc:mysql://데이터베이스 주소:포트번호/스키마이름?useSSL=false&amp;serverTimezone=UTC"> 
+		</property> <property name="username" value="MySQL 계정"></property> <property 
+		name="password" value="비밀번호"></property> </bean> -->
+
+	<!-- 로컬 Maria10.1을 설치했을 경우 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property> 
+		<property name="url" value="jdbc:mysql://127.0.0.1:3307/pmsadmin01?useSSL=false&amp;serverTimezone=UTC"> 
+		</property> <property name="username" value="pmsadmin01"></property> <property 
+		name="password" value="alal590606"></property> </bean> -->
+	<!-- 변경된 datasouce [1] <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property> 
+		<property name="url" value="jdbc:mysql://127.0.0.1:3307/pmsadmin01?useSSL=false&amp;serverTimezone=UTC"> 
+		</property> <property name="username" value="pmsadmin01"></property> <property 
+		name="password" value="alal590606"></property> </bean> -->
+	<!-- 변경된 datasouce [2] -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName"
+			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="jdbcUrl"
+			value="jdbc:log4jdbc:mysql://127.0.0.1:3307/pmsadmin01?serverTimezone=Asia/Seoul">
+		</property>
+		<property name="username" value="pmsadmin01"></property>
+		<property name="password" value="alal590606"></property>
+	</bean>
+
+	<!-- https://github.com/zeroKang/ex03/blob/master/ex02/src/main/webapp/WEB-INF/spring/root-context.xml -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+
+	<!-- mybatis SqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<!-- mybatis SqlSessionFactoryBean -->
+	<mybatis-spring:scan
+		base-package="kr.pmadvisor.pms.mapper" />
+
+	<context:component-scan
+		base-package="kr.pmadvisor.pms.sample">
+	</context:component-scan>
+
+
+</beans>
