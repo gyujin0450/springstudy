@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.pmadvisor.pms.ex03.mapper.ReplyMapper">
+
+	<insert id="createReply">
+		insert into tbl_reply (bno, replytext, replyer)
+		values (#{bno},#{replytext},#{replyer})
+	</insert>
+	
+	<select id="readRno" resultType="ReplyVO">
+		select * from tbl_reply where rno = #{rno}
+	</select>
+	
+	<update id="updateReplyText">
+		update 	tbl_reply 
+		set  	replytext = #{replytext},
+			 	updatedate = now()
+		where	rno = #{rno}
+	</update>
+		
+	<delete id="deleteRno" > 
+		delete from tbl_reply 
+		where rno = #{rno}
+	</delete>
+	
+	<select id="getListWithPaging" resultType="ReplyVO">
+	<![CDATA[
+		select /*+ Index(tbl_reply idx_reply) */
+		bno, rno, replytext, replyer, regdate, updatedate
+		from tbl_reply
+		where bno = #{bno} and rno > 0
+		limit #{cri.rowStart}, #{cri.perPageNum};
+	]]>
+	</select>
+
+<!-- 		select rno, bno, replytext, replyer, regdate, updatedate -->
+<!-- 		from  tbl_reply -->
+<!-- 		where bno = #{bno} -->
+<!-- 		order by rno asc; -->
+
+</mapper>
