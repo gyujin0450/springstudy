@@ -1,7 +1,5 @@
 package kr.pmadvisor.pms.ex03.controller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import kr.pmadvisor.pms.ex03.domain.Criteria;
+import kr.pmadvisor.pms.ex03.domain.ReplyPageDTO;
 import kr.pmadvisor.pms.ex03.domain.ReplyVO;
 import kr.pmadvisor.pms.ex03.service.ReplyService;
 import lombok.AllArgsConstructor;
@@ -43,19 +42,24 @@ public class ReplyController {
 
 	}
 
-	// p395 : 특정 게시물의 댓글 목록 확인
-	@GetMapping(value = "/pages/{bno}/{page}", produces = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<List<ReplyVO>> getList(
+	// p395 : 특정 게시물의 댓글 목록 확인 & p435 페이지 처리를 위한 변경
+	@GetMapping(value = "/pages/{bno}/{page}", 
+			produces = { MediaType.APPLICATION_XML_VALUE,
+						 MediaType.APPLICATION_JSON_UTF8_VALUE })
+//	public ResponseEntity<List<ReplyVO>> getList(
+	public ResponseEntity<ReplyPageDTO> getList(
 			@PathVariable("page") int page, 
 			@PathVariable("bno") Long bno) {
 
-		log.info("getList...................");
+		log.info("getList(pageing).........");
 		
 		Criteria cri = new Criteria(page, 10);
-		log.info(cri);
 		
-		return new ResponseEntity<>(service.getList(cri, bno), HttpStatus.OK);
+		log.info("get Reply List bno : " + bno);
+		log.info("cri : " + cri);
+		
+//		return new ResponseEntity<>(service.getList(cri, bno), HttpStatus.OK);
+		return new ResponseEntity<>(service.getListPage(cri, bno), HttpStatus.OK);
 		
 	}
 	

@@ -28,16 +28,22 @@ var replyService = (function(){
 		})
 	}
 	
-	// p406 : 뎃글 조회
+	// p406 : 댓글 조회  & p437 : 댓글 페이지 처리 반영 
 	function getList(param, callback, error){
 
 		var bno  = param.bno;
 		var page = param.page || 1;
+				
+		console.log("===================");
+		console.log("bno : " + bno);
+		console.log("page : " + page);
+		console.log("===================");
 		
 		$.getJSON("/replies/pages/" + bno + "/" + page + ".json",
 			function(data){
 				if(callback){
-					callback(data);
+//					callback(data); // 대글만 가져 오는 경우
+					callback(data.replyCnt, data.list); // 댓글 숫자와 목록을 가져으는 경우
 				}
 			}).fail(function(xhr, status, err){
 				if(error){

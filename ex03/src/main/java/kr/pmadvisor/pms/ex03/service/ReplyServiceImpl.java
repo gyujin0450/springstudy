@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import kr.pmadvisor.pms.ex03.domain.Criteria;
+import kr.pmadvisor.pms.ex03.domain.ReplyPageDTO;
 import kr.pmadvisor.pms.ex03.domain.ReplyVO;
 import kr.pmadvisor.pms.ex03.mapper.ReplyMapper;
 import lombok.AllArgsConstructor;
@@ -57,4 +58,17 @@ public class ReplyServiceImpl implements ReplyService {
 		return mapper.getListWithPaging(cri,bno);		
 	}
 
+	@Override
+	public ReplyPageDTO getListPage(Criteria cri, Long bno) {
+		
+		log.info("get Reply List of board(paging)......"+ bno);
+		log.info("cri.pageStart : " + cri.getPageStart() );
+		log.info("cri.rowStart : " + cri.getRowStart());
+		log.info("cri.getPerPageNum : " + cri.getPerPageNum() );
+		
+		return new ReplyPageDTO(
+				mapper.getCountByBno(bno),
+				mapper.getListWithPaging(cri, bno));
+	}
+	
 }

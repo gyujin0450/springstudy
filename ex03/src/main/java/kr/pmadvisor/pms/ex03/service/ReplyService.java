@@ -3,6 +3,7 @@ package kr.pmadvisor.pms.ex03.service;
 import java.util.List;
 
 import kr.pmadvisor.pms.ex03.domain.Criteria;
+import kr.pmadvisor.pms.ex03.domain.ReplyPageDTO;
 import kr.pmadvisor.pms.ex03.domain.ReplyVO;
 
 public interface ReplyService {
@@ -15,6 +16,8 @@ public interface ReplyService {
 	
 	public int remove(Long bno);				// 삭제	
 	
-	public List<ReplyVO> getList(Criteria cri, Long bno);	// 전체조회(Paging 반영)
+	public List<ReplyVO> getList(Criteria cri, Long bno);	// 전체조회(Paging 반영 ??)
+	
+	public ReplyPageDTO getListPage(Criteria cri, Long bno); // 댓긓 페이지 반영
 	
 }

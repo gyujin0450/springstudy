@@ -35,11 +35,19 @@ public class Criteria {
 	/* pageStart --> rowStart 매핑 반영!!!
 	 *  
 	 * 1페이지 : 0 행부터 10개행 (  0 ~  9)
-	 * 2페이지 : 1 행부터 10개행 ( 10 ~ 19)
+	 * 2페이지 : 10 행부터 10개행 ( 10 ~ 19)
 	 */
 	public void setPageStart(int pageStart) {
 		this.pageStart = pageStart;
-		this.rowStart = (this.pageStart - 1)*this.perPageNum;
+		this.rowStart = (this.pageStart - 1)*this.perPageNum;  // 댓글 페이지에서는 먹지 않음 ???
+	}
+
+	public int getRowStart() {
+		return rowStart;
+	}
+
+	public void setRowStart(int rowStart) {
+		this.rowStart = rowStart;
 	}
 
 	public int getPerPageNum() {

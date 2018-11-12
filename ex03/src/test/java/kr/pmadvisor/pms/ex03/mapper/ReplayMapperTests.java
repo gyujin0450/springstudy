@@ -105,7 +105,19 @@ public class ReplayMapperTests {
 		
 	}
 	
-
+	// p431
+	@Test
+	public void testListwithPage() {
+		
+		Criteria cri = new Criteria(3,10);
+		
+		List<ReplyVO> replies = mapper.getListWithPaging(cri, 3112910L); // 
+		
+		replies.forEach(reply -> log.info(reply));	
+		
+	}
+	
+	
 }
 
 

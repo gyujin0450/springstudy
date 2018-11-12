@@ -75,8 +75,9 @@
 					Reply</button>
 			</div>
 
-			<div class="pannel-body">
+			<div class="panel-body">
 				<ul class="chat">
+					<!-- p439에서 삭제 처리
 					<li class="left clearfix" data-rno='12'>
 						<div>
 							<div class="header">
@@ -86,11 +87,16 @@
 							<p>Good Job!!</p>
 						</div>
 					</li>
+					 -->
 				</ul>
 			</div>
 		</div>
-		>
 		<!-- end of p414 내용 추가 -->
+		<!-- p439 panel-footer 추가 -->
+		<div class="panel-footer">
+		
+		</div>
+		<!-- end of p439 panel-footer -->
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -146,25 +152,42 @@ $(document).ready(function(){
 	
 	function showList(page){
 		
-		replyService.getList({bno:bnoValue, page: page||1}, function(list){
-				
+		console.log("show list " + page);
+		
+// 		replyService.getList({bno:bnoValue, page: page||1}, function(list){
+		replyService.getList({bno:bnoValue, page: page||1}, function(replyCnt, list){
+			
+			// p438 추가 부분 start
+			console.log("replyCnt: " + replyCnt);
+			console.log("list: " + list);
+			console.log(list);
+			
+			if(page == -1){
+				pageNum = Math.ceil(replyCnt/10.0);
+				showList(pageNum);
+				return;
+			}
+			// p438 추가 부분 end
+			
 			var str="";
 			
 			if(list == null || list.length == 0){
-				replyUL.html("");
 				return;
 			}
 			
 			for(var i = 0, len = list.length || 0 ; i < len ; i++){
 				
 				str += "<li class='left clearfix' data-rno='"+list[i].rno+"'>";
-				str += "  <div><div class='header'><strong class='primary-font'>"+list[i].replyer+"</strong>";
+// 				str += "  <div><div class='header'><strong class='primary-font'>"+list[i].replyer+"</strong>";
+				str += "  <div><div class='header'><strong class='primary-font'>["+ list[i].rno	+ "]"+list[i].replyer+"</strong>";
 				str += "    <small class='pull-right text-muted'>" + replyService.displayTime(list[i].regdate) + "</small></div>";
 				str += "    <p>"+list[i].replytext+"</p></div></li>";
 				
 			}
 			
 			replyUL.html(str);
+			
+			showReplyPage(replyCnt);
 			
 			}); // end function 
 			
@@ -192,7 +215,7 @@ $(document).ready(function(){
 		
 	});
 	
-	// p423
+	// p423 & p439
 	modalRegisterBtn.on("click", function(e){
 		
 		var reply = {
@@ -208,7 +231,8 @@ $(document).ready(function(){
 			modal.find("input").val("");
 			modal.modal("hide");
 			
-			showList(1);
+// 			showList(1);
+			showList(-1); // page를 -1로 전달하면, 전체 댓글의 숫자를 파악함 (p439)
 			
 		});
 		
@@ -268,10 +292,70 @@ $(document).ready(function(){
 		
 	});
 	
+	// p440 댓글 페이지 조회
+	var pageNum = 1;
+	var replyPageFooter = $(".panel-footer");
 	
+	function showReplyPage(replyCnt){
+		
+		var endNum = Math.ceil(pageNum /10.0) * 10;
+		var startNum = endNum - 9;
+		
+		var prev = startNum != 1;
+		var next = false;
+		
+		
+		if(endNum * 10 >= replyCnt){
+			endNum = Math.ceil(replyCnt/10.0);
+		}
 	
-	
-	
+		if(endNum * 10 < replyCnt){
+			next = true;
+		}
+		
+		var str = "<ul class='pagination pull-right'>";
+		
+		if(prev){
+			str += "<li class='page-item'><a class='page-link' href='" + (startNum - 1) + "'>이전</a></li>";
+		}
+		
+		for(var i = startNum ; i <= endNum ; i++){
+			
+			var active = pageNum == i ? "active" : "";
+			
+			str += "<li class='page-item " + active + " '><a class='page-link' href='" + i + "'>" + i + "</a></li>";
+		}
+		
+		if(next){
+			str += "<li class='page-item'><a class='page-link' href='" + (endNum + 1) + "'> 다음</a></li>";
+			
+		}
+		
+		str += "</ul></div>";
+		
+		console.log(str);
+		
+		replyPageFooter.html(str);
+		
+	} // end of showReplyPage
+			
+	// p441 : 새로운 댓글 가져오기
+	replyPageFooter.on("click", "li a", function(e){
+		
+		e.preventDefault();
+		console.log("page click");
+			
+		var targetPageNum = $(this).attr("href");
+			
+		console.log("targetPageNum: " + targetPageNum);
+			
+		pageNum = targetPageNum;
+			
+		showList(pageNum);
+			
+	});
+		
+
 	
 });	
 </script>
