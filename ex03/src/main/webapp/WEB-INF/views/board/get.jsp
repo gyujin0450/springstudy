@@ -262,7 +262,7 @@ $(document).ready(function(){
 		});		
 	});
 	
-	// p427 : 댓글수정
+	// p427 & 442: 댓글수정
 	modalModBtn.on("click", function(e){
 	
 		var reply = {rno:modal.data("rno"), replytext: modalInputReplytext.val()};
@@ -271,7 +271,8 @@ $(document).ready(function(){
 		
 			alert(result);
 			modal.modal("hide");
-			showList(1);
+// 			showList(1);
+			showList(pageNum);
 			
 		});
 		
@@ -286,7 +287,8 @@ $(document).ready(function(){
 			
 			alert(result);
 			modal.modal("hide");
-			showList(1);
+// 			showList(1);
+			showList(pageNum);
 			
 		});
 		

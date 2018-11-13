@@ -2,6 +2,10 @@ package kr.pmadvisor.pms.ex03.domain;
 
 import org.springframework.web.util.UriComponentsBuilder;
 
+import lombok.extern.log4j.Log4j;
+
+
+@Log4j
 public class Criteria {
 
 	private int pageStart;  // 개정판 : pageNum
@@ -24,6 +28,8 @@ public class Criteria {
 
 		this.pageStart = pageStart;
 		this.perPageNum = perPageNum;
+		
+		log.warn("constructor...");
 	}
 
 	// setter/getter, ToString() 로직 반영 필요!!
@@ -38,11 +44,21 @@ public class Criteria {
 	 * 2페이지 : 10 행부터 10개행 ( 10 ~ 19)
 	 */
 	public void setPageStart(int pageStart) {
+		
+		log.warn("setPageStart....");
+		
 		this.pageStart = pageStart;
-		this.rowStart = (this.pageStart - 1)*this.perPageNum;  // 댓글 페이지에서는 먹지 않음 ???
+		
 	}
-
+		
 	public int getRowStart() {
+		
+		// setPagestart() 가 아니라 getRowStart에 아래 로직을 삽입해야 함!!
+		
+		log.warn("getRowStart....");
+		
+		this.rowStart = (this.pageStart - 1)*this.perPageNum;  
+		
 		return rowStart;
 	}
 
