@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:annotation-config></context:annotation-config>
+
+	<!-- MySQL 접속 설정 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName"
+			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+		<property name="jdbcUrl"
+			value="jdbc:log4jdbc:mysql://127.0.0.1:3307/pmsadmin01?serverTimezone=Asia/Seoul" />
+		<property name="username" value="pmsadmin01" />
+		<property name="password" value="alal590606" />
+	</bean>
+
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+
+	<!-- mybatis SqlSessionFactoryBean -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- MyBatis Config 연결 : 기존책(p93) -->
+		<property name="configLocation"
+			value="classpath:/mybatis-config.xml"></property>
+		<!-- myBatis 용 config 파일을 로드하도록 설정 -->
+		<!-- myBatis-Spring 에서 XML Mapper 인식 설정 -->
+		<property name="mapperLocations"
+			value="classpath:mappers/**/*Mapper.xml"></property>
+	</bean>
+	
+	<!-- 트랜젝션 관련 설정(p469) -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>	
+	</bean>
+
+	<tx:annotation-driven/>
+	
+	<!-- 지정된 패키지의 모든 MyBatis 관련 어노테이션을 찾음 -->
+	<mybatis-spring:scan base-package="kr.pmadvisor.pms.ex04.mapper" />
+	
+	<!-- AOP 관련 설정 -->
+	<context:component-scan
+		base-package="kr.pmadvisor.pms.ex04.service"></context:component-scan>
+	<context:component-scan
+		base-package="kr.pmadvisor.pms.ex04.aop"></context:component-scan>
+
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+</beans>
