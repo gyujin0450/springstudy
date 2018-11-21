@@ -14,53 +14,52 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
 	<!-- MySQL dataSource -->
-	<!-- cafe24 관련 설정 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+	<!-- cafe24 관련 설정 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property> 
-		<property name="url" value="jdbc:mysql://데이터베이스 주소:포트번호/스키마이름?useSSL=false&amp;serverTimezone=UTC"></property> 
-		<property name="username" value="MySQL 계정"></property> 
-		<property name="password" value="비밀번호"></property> 
-	</bean> 
-	-->
+		<property name="url" value="jdbc:mysql://데이터베이스 주소:포트번호/스키마이름?useSSL=false&amp;serverTimezone=UTC"> 
+		</property> <property name="username" value="MySQL 계정"></property> <property 
+		name="password" value="비밀번호"></property> </bean> -->
 
-	<!-- 로컬 Maria10.1을 설치했을 경우 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+	<!-- 로컬 Maria10.1을 설치했을 경우 <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property> 
-		<property name="url" value="jdbc:mysql://127.0.0.1:3306/pmsadmin01?useSSL=false&amp;serverTimezone=UTC"></property>
-		<property name="username" value="pmsadmin01"></property> 
-		<property name="password" value="alal590606"></property> 
-	</bean> 
-	-->
-	<!-- 변경된 datasouce [1] : log4jdbc 를 이용하기 위한 설정 변경(p102)
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="url" value="jdbc:mysql://127.0.0.1:3307/pmsadmin01?useSSL=false&amp;serverTimezone=UTC"> 
+		</property> <property name="username" value="pmsadmin01"></property> <property 
+		name="password" value="alal590606"></property> </bean> -->
+	<!-- 변경된 datasouce [1] <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property> 
-		<property name="url" value="jdbc:mysql://127.0.0.1:3306/pmsadmin01?useSSL=false&amp;serverTimezone=UTC"></property>
-		<property name="username" value="pmsadmin01"></property> 
-		<property name="password" value="alal590606"></property> 
-	</bean> 
-	--> 
-	
+		<property name="url" value="jdbc:mysql://127.0.0.1:3307/pmsadmin01?useSSL=false&amp;serverTimezone=UTC"> 
+		</property> <property name="username" value="pmsadmin01"></property> <property 
+		name="password" value="alal590606"></property> </bean> -->
 	<!-- 변경된 datasouce [2] -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
-		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-		<property name="jdbcUrl" value="jdbc:log4jdbc:mysql://127.0.0.1:3306/pmsadmin01?serverTimezone=Asia/Seoul"></property>
+		<property name="driverClassName"
+			value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="jdbcUrl"
+			value="jdbc:log4jdbc:mysql://127.0.0.1:3307/pmsadmin01?serverTimezone=Asia/Seoul">
+		</property>
 		<property name="username" value="pmsadmin01"></property>
 		<property name="password" value="alal590606"></property>
 	</bean>
 
 	<!-- https://github.com/zeroKang/ex03/blob/master/ex02/src/main/webapp/WEB-INF/spring/root-context.xml -->
-	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource"
+		destroy-method="close">
 		<constructor-arg ref="hikariConfig" />
 	</bean>
 
 	<!-- mybatis SqlSessionFactoryBean -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
 	<!-- mybatis SqlSessionFactoryBean -->
-	<mybatis-spring:scan base-package="kr.pmadvisor.pms.mapper" />
+	<mybatis-spring:scan
+		base-package="kr.pmadvisor.pms.mapper" />
 
-	<context:component-scan base-package="kr.pmadvisor.pms.sample"/>
+	<context:component-scan
+		base-package="kr.pmadvisor.pms.sample">
+	</context:component-scan>
+
 
 </beans>

@@ -14,8 +14,9 @@ import lombok.Setter;
 @Data		// Lombok의 setter를 생성하는 기능과 생성자, toString() 등을 자동으로 생성하도록함
 public class Restaurant {
 
- @Setter(onMethod_ = @Autowired) // 자동으로 setChef()를 컴파일시 생성함
- private Chef chef;
+
+@Setter(onMethod_ = @Autowired) // 자동으로 setChef()를 컴파일시 생성함
+private Chef chef;
 
 }
 
