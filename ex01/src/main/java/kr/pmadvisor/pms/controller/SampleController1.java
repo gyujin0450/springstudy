@@ -2,6 +2,7 @@ package kr.pmadvisor.pms.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpHeaders;
@@ -53,32 +54,52 @@ public class SampleController1 {
 
 		log.info("" + dto);
 
-		return "ex01";
+		return "sample/ex01";
 	}
 
 	@GetMapping("/ex02")
-	public String ex02(@RequestParam("name") String name, @RequestParam("age") int age) {
+	public String ex02(@RequestParam("irum") String name, @RequestParam("nai") int age) {
 
 		log.info("name : " + name);
 		log.info("age  : " + age);
 
-		return "ex01";
+		return "sample/ex02";
 	}
+	
+	@GetMapping("/ex02Test")
+	public String ex02Test(String name, int age) {
+
+		log.info("name : " + name);
+		log.info("age  : " + age);
+
+		return "sample/ex02Test";
+	}
+	
 
 	@GetMapping("/ex02List")
 	public String ex02(@RequestParam("ids") ArrayList<String> ids) {
 
 		log.info("ids : " + ids);
 
-		return "ex01";
+		return "info_page";
 	}
+	
+	@GetMapping("/ex02Array")
+	public String ex02(@RequestParam("ids") String[] ids) {
+
+		log.info("array ids : " + Arrays.toString(ids));
+
+		return "info_page";
+	}
+	
+	
 
 	@GetMapping("/ex02Bean")
 	public String ex02(SampleDTOList list) {
 
 		log.info("list dtos : " + list);
 
-		return "ex01";
+		return "info_page";
 	}
 
 	@GetMapping("/ex031")
@@ -86,7 +107,7 @@ public class SampleController1 {
 
 		log.info("todo : " + todo);
 
-		return "ex01";
+		return "info_page";
 	}
 
 	@GetMapping("/ex04")

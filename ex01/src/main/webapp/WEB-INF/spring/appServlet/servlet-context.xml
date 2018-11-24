@@ -28,7 +28,10 @@
 		<beans:property name="maxUploadSize" value="104857560"/>
 		<!-- 1024 * 1024 * 2 byte 2MB -->
 		<beans:property name="maxUploadSizePerFile" value="2097152"/>
+		<!-- 
 		<beans:property name="uploadTempDir" value="file:/c:/upload/tmp"/>
+		--> 
+		<beans:property name="uploadTempDir" value="file:/upload/tmp"/>
 		<!--  1024 * 1024 * 10 byte 1MB -->
 		<beans:property name="maxInMemorySize" value="10485756"/>		
 	</beans:bean>	
