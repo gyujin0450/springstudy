@@ -18,13 +18,14 @@ public class BoardServiceImpl implements BoardService {
 	// spring 4.3 이상에서 자동 처리
 	// @Setter(onMethod_ = @Atutowired)
 	private BoardMapper mapper;
-		
+	
 	@Override
 	public void register(BoardVO board) {
 		
 		log.info("register..........."+ board);
 		
-		mapper.insert(board);		// 등록 SQL 함수 호출
+		mapper.create(board);		// 등록 SQL 함수 호출
+		
 	}
 
 	@Override
@@ -51,13 +52,13 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.delete(bno) == 1;		// 수성 SQL 함수를 호출하고, 정상 처리시 1이 리턴됨...
 	}
 
-//	@Override
-//	public List<BoardVO> getList() {
-//
-//		log.info("getList................");
-//		
-//		return mapper.getList();	// 목록조회	
-//	}	
+	@Override
+	public List<BoardVO> getList() {
+
+		log.info("getList................");
+		
+		return mapper.getList();	// 목록조회	
+	}	
 	
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
@@ -73,6 +74,6 @@ public class BoardServiceImpl implements BoardService {
 		log.info("get total count ..............");
 		
 		return mapper.getTotalCount(cri);
-	}	
+	}
 
 }

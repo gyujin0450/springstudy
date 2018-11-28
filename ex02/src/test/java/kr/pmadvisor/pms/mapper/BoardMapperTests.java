@@ -35,9 +35,12 @@ public class BoardMapperTests {
 		board.setContent("새내용1");
 		board.setWriter("user2");
 		
-		mapper.insert(board);
+		mapper.create(board);
 		
-		log.info(board);
+		log.info(board); 
+		// Lombok이 만들오 주는 toString()을 이용해
+		// bno 멤버 변수의 값을 알아보기 위함(p191)
+							
 		
 	}
 	
@@ -65,7 +68,7 @@ public class BoardMapperTests {
 		BoardVO board = new BoardVO();
 		
 		// 실행전에 존재하는 번호 인지 확인 할 것!!
-		board.setBno(5);
+		board.setBno(5L);
 		board.setTitle("수정5");
 		board.setContent("수정5");
 		board.setWriter("user2");

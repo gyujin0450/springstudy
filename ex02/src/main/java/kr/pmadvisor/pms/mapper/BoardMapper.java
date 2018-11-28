@@ -18,25 +18,35 @@ import kr.pmadvisor.pms.domain.Criteria;
 
 public interface BoardMapper {
 	
-	public List<BoardVO> getList();
+//  어노테이션 방식	
+//	
+//	@Select("select * from tbl_board where bno > 0")
+//	public List<BoardVO> getList();
+//	
+
+/////////////////////////////////////////////////////////
+//	
+//  BoardMapper.xml 에 CRUD SQL 작성하는 방식
+//	
+	
+//	public void insertSelectKey(BoardVO board); // MySQL는 자동 Increment 되기 때문에 불필요
+
+	public void create(BoardVO board);
+	
+	public List<BoardVO> getList();  
 	
 	public List<BoardVO> getListWithPaging(Criteria cri);
 	
-	public void insert(BoardVO board);
-	
-//	public void insertSelectKey(BoardVO board); // MySQL에서는..?
-	
 	public BoardVO read(Long bno);	// DB에서 bno을  int로 했는...
 	
-	public int delete(Long bno);
-	
 	public int update(BoardVO board);
+
+	public int delete(Long bno); // 정상적으로 삭제 되면 1(건), 아니면 0 반환됨
 	
 	// paging 처리...기존책 p249
 	public List<BoardVO> listpage(int page);
 	
 	// 전체 데이터의 개수 처리 ... 개정판 p322
 	public int getTotalCount(Criteria cri);
-	
 
 }

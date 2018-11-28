@@ -34,9 +34,9 @@ public class BoardServiceTests {
 		
 		BoardVO board = new BoardVO();
 		
-		board.setTitle("신규1");
-		board.setContent("신규1");
-		board.setWriter("user2");
+		board.setTitle("신규2");
+		board.setContent("신규2");
+		board.setWriter("user3");
 		
 		service.register(board);
 		
@@ -46,8 +46,8 @@ public class BoardServiceTests {
 	@Test
 	public void testGetList() {
 		
-//		service.getList().forEach(board -> log.info(board));
-		service.getList(new Criteria(2,10)).forEach(board -> log.info(board));
+		service.getList().forEach(board -> log.info(board));
+//		service.getList(new Criteria(2,10)).forEach(board -> log.info(board));
 		
 	}
 	
@@ -66,7 +66,7 @@ public class BoardServiceTests {
 	@Test
 	public void testUpdate() {
 		
-		BoardVO board = service.get(2L);
+		BoardVO board = service.get(4L);
 		
 		if(board == null) {
 			log.info("Not Find.."+board);

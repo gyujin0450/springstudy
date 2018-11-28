@@ -64,7 +64,7 @@ public class BoardControllerTests {
 		log.info(mockMvc
 				.perform(MockMvcRequestBuilders
 						.get("/board/get")
-						.param("bno","2"))
+						.param("bno","5"))
 				.andReturn()
 				.getModelAndView()
 				.getModelMap());
@@ -75,9 +75,9 @@ public class BoardControllerTests {
 		
 		String resultPage = mockMvc
 				.perform(MockMvcRequestBuilders.post("/board/modify")
-						.param("bno", "4")
-						.param("title", "재수정4")
-						.param("content","재수정내용4")
+						.param("bno", "5")
+						.param("title", "재수정5")
+						.param("content","재수정내용5")
 						.param("writer","user05"))
 				.andReturn()
 				.getModelAndView()
@@ -91,7 +91,7 @@ public class BoardControllerTests {
 		
 		String resultPage = mockMvc
 				.perform(MockMvcRequestBuilders.post("/board/remove")
-						.param("bno", "4"))
+						.param("bno", "5"))
 				.andReturn()
 				.getModelAndView()
 				.getViewName();
